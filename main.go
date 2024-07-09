@@ -1,38 +1,43 @@
 package main
 
 import (
-	"ecomVoraz/app/service"
+	"database/sql"
 	"fmt"
 	"log"
+
+	_ "github.com/lib/pq"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/joaovitormgv/ecomLengoTengo/app/handlers"
+	"github.com/joaovitormgv/ecomLengoTengo/app/middleware"
+	"github.com/joaovitormgv/ecomLengoTengo/app/routes"
 )
 
-// import (
-// 	"github.com/gofiber/fiber/v2"
-// )
+const (
+	user     = "postgres"
+	password = "123456"
+	dbname   = "lengotengo"
+)
 
-// func main() {
-// 	app := fiber.New()
-
-// 	app.Get("/", func(c *fiber.Ctx) error {
-// 		return c.SendString("Hello, World!")
-// 	})
-
-// 	app.Listen(":3000")
-// }
+var connectionString = fmt.Sprintf("postgres://%s:%s@localhost:5433/%s?sslmode=disable", user, password, dbname)
 
 func main() {
-	products, err := service.GetProducts(5)
+	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
-		log.Fatalf("Erro ao obter produtos da Fake Store API: %v", err)
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	store := session.New()
+
+	h := &handlers.Handlers{
+		Store: store,
+		DB:    db,
 	}
 
-	for _, p := range products {
-		fmt.Printf("ID: %d\n", p.ID)
-		fmt.Printf("Title: %s\n", p.Title)
-		fmt.Printf("Price: %.2f\n", p.Price)
-		fmt.Printf("Description: %s\n", p.Description)
-		fmt.Printf("Category: %s\n", p.Category)
-		fmt.Printf("Image: %s\n", p.Image)
-		fmt.Println("-----------------------------------")
-	}
+	app := fiber.New()
+	app.Use(middleware.CorsMiddleware())
+	routes.Setup(app, h)
+	app.Listen(":3000")
 }
