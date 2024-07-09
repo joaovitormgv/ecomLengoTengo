@@ -1,4 +1,4 @@
-module ecomVoraz
+module github.com/joaovitormgv/ecomLengoTengo
 
 go 1.21.3
 
