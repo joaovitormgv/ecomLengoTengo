@@ -17,4 +17,5 @@ func Setup(app *fiber.App, h *handlers.Handlers) {
 
 	// Métodos para manipular produtos
 	app.Get("/api/product/:id", h.GetProductById)
+	app.Get("/api/products", h.GetProducts)
 }

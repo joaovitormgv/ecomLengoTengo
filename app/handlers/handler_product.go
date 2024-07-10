@@ -25,3 +25,28 @@ func (h *Handlers) GetProductById(c *fiber.Ctx) error {
 
 	return c.JSON(product)
 }
+
+func (h *Handlers) GetProducts(c *fiber.Ctx) error {
+	products := []models.Product{}
+
+	rows, err := h.DB.Query("SELECT * FROM products")
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		product := models.Product{}
+		err = rows.Scan(&product.ID, &product.Title, &product.Description, &product.Price, &product.Category, &product.Image)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		}
+		products = append(products, product)
+	}
+
+	return c.JSON(products)
+}
