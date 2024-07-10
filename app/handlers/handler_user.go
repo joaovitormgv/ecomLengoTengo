@@ -7,6 +7,29 @@ import (
 	"github.com/joaovitormgv/ecomLengoTengo/app/models"
 )
 
+func (h *Handlers) RegisterUser(c *fiber.Ctx) error {
+	user := &models.User{}
+	err := c.BodyParser(user)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	row := h.DB.QueryRow("INSERT INTO users (email, username, password, gender, name_firstname) VALUES ($1, $2, $3, $4, $5) RETURNING id", user.Email, user.Username, user.Password, user.Gender, user.NameFirstname)
+	err = row.Scan(&user.ID)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Usuário cadastrado com sucesso",
+		"user_id": user.ID,
+	})
+}
+
 func (h *Handlers) LoginUser(c *fiber.Ctx) error {
 	// Verificar se há uma sessão ativa
 	sess, err := h.Store.Get(c)
