@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-    order_id VARCHAR(255) PRIMARY KEY,
+    order_id UUID PRIMARY KEY,
     user_id INT NOT NULL,
     product_id INT NOT NULL,
     product_name VARCHAR(255) NOT NULL,
