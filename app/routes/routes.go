@@ -8,7 +8,7 @@ import (
 
 func Setup(app *fiber.App, h *handlers.Handlers) {
 	// Métodos para manipular pedidos
-	// app.Get("api/orders" )
+	app.Get("api/orders", middleware.AuthRequired(h.Store), h.GetOrders)
 
 	// Métodos para manipular usuários
 	app.Post("/api/login", h.LoginUser)
