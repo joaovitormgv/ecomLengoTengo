@@ -12,6 +12,7 @@ func Setup(app *fiber.App, h *handlers.Handlers) {
 	app.Post("api/orders", middleware.AuthRequired(h.Store), h.CreateOrder)
 
 	// Métodos para manipular usuários
+	app.Post("/api/register", h.RegisterUser)
 	app.Post("/api/login", h.LoginUser)
 	app.Post("/api/logout", middleware.AuthRequired(h.Store), h.LogoutUser)
 
