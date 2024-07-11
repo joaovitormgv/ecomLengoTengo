@@ -35,3 +35,30 @@ CREATE TABLE IF NOT EXISTS products (
     category VARCHAR(255) NOT NULL,
     image VARCHAR(255)
 );
+
+CREATE TABLE IF NOT EXISTS sessions (
+    session_id UUID PRIMARY KEY,
+    data BYTEA,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS session_navigation_history (
+    id SERIAL PRIMARY KEY,
+    session_id UUID,
+    product_id int,
+    time_visited TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    action_taken VARCHAR(255),
+    FOREIGN KEY (session_id) REFERENCES sessions(session_id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS user_navigation_history (
+    id SERIAL PRIMARY KEY,
+    user_id INT,
+    product_id INT,
+    time_visited TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    action_taken VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);

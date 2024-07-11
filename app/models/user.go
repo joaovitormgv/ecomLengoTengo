@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type User struct {
 	ID                 int    `json:"id"`
 	Email              string `json:"email"`
@@ -17,4 +19,12 @@ type User struct {
 	AddressZipcode string `json:"address_zipcode"`
 	NameFirstname  string `json:"name_firstname"`
 	NameLastname   string `json:"name_lastname"`
+}
+
+type UserNavigationHistory struct {
+	ID          int       `json:"id"`
+	UserID      int       `json:"user_id"`
+	ProductID   int       `json:"product_id"`
+	TimeVisited time.Time `json:"time_visited"`
+	ActionTaken string    `json:"action_taken"`
 }
