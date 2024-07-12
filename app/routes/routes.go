@@ -28,4 +28,10 @@ func Setup(app *fiber.App, h *handlers.Handlers) {
 
 	// Métodos para manipular histórico de navegação de usuários
 	app.Post("/api/user/navigation", middleware.AuthRequired(h.Store), h.RegisterPageVisited)
+
+	// Métodos para manipular recomendações
+	app.Get("/api/recommend/popular", h.PopularProductsHandler)
+	app.Get("/api/recommend/category/popular", h.PopularProductsByCategoryHandler)
+	app.Get("/api/recommend/views-based", middleware.AuthRequired(h.Store), h.RecommendProductsBasedOnCategoryViewsHandler)
+	app.Get("/api/recommend/anonimous/views-based", h.RecommendProductsBasedOnSessionViewsHandler)
 }

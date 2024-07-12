@@ -16,16 +16,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS orders (
-    order_id UUID PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
-    product_name VARCHAR(255) NOT NULL,
-    category VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL,
-    price DOUBLE PRECISION NOT NULL,
-    order_date DATE NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS products (
     id SERIAL PRIMARY KEY,
@@ -34,6 +24,18 @@ CREATE TABLE IF NOT EXISTS products (
     price NUMERIC(10, 2) NOT NULL,
     category VARCHAR(255) NOT NULL,
     image VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    order_id UUID PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    price DOUBLE PRECISION NOT NULL,
+    order_date DATE NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
