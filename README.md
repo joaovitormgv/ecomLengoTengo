@@ -23,7 +23,7 @@ Para rodar a aplicação juntamente com o backend, siga estes passos:
   
 2. Em seguida, em outro terminal, execute o comando:
 ```bash
-go run.main.go
+go run main.go
 ```
 
 ## Estrutura de arquivos
