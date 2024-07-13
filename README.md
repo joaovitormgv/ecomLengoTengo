@@ -1,6 +1,5 @@
 ## Sobre o projeto
-Essa aplicação web é um esboço de um backend para ecommerce, com lógicas para personalizar a experiência de cada usuário a partir de dados de navegação deste e dos outros usuários do site. Cada usuário deve ter uma experiência diferente,
-personalizada aos seus interesses em produtos, vendo aquilo que tem mais probabilidade de se interessar e/ou comprar.
+Esta aplicação web é um esboço de um backend para e-commerce, com lógicas para personalizar a experiência de cada usuário a partir de dados de navegação deste e dos outros usuários do site. Cada usuário deve ter uma experiência diferente, personalizada aos seus interesses em produtos, baseado naquilo que foi mais visualizado e que tem mais probabilidade de se interessar e/ou comprar.
 
 Esse projeto foi realizado para o Desafio Voraz 2024 da GoCase. Desafio proposto pela gocase: criar um ecommerce que personalize a experiência de cada usuário.
 
